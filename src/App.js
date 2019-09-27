@@ -4,20 +4,20 @@ import './App.css';
 import AddBookmark from './addBookmark/addBookmark'
 import BookmarkApp from './bookmarkApp/bookmarkApp'
 
-// const bookmarks = [
-//   {
-//     title: "Google",
-//     url: "http://www.google.com",
-//     rating: "3",
-//     description: "No evil"
-//   },
-//   {
-//     title:"Google",
-//     url:"http://www.google.com", 
-//     rating:"3", 
-//     description:"No evil"
-//   }
-// ];
+const bookmarks = [
+  {
+    title: "Google",
+    url: "http://www.google.com",
+    rating: "3",
+    description: "No evil"
+  },
+  {
+    title:"Google",
+    url:"http://www.google.com", 
+    rating:"3", 
+    description:"No evil"
+  }
+];
 
 class App extends Component {
   constructor(props){
@@ -56,16 +56,33 @@ class App extends Component {
       })
       .catch(err => {
         this.setState ({
-          error: err.messag
+          error: err.message
         })
       })
 
   }
 
+  setShowAddForm(show) {
+    this.setState({
+      showAddForm: show
+    })
+  }
+
+  AddBookmark(bookmark){
+    this.setState({
+      bookmarks: [...this.state.bookmarks, bookmark],
+      showAddForm: false
+    })
+  }
+
   render() {
     const page = this.state.showAddForm
-      ? <AddBookmark />
-      : <BookmarkApp bookmarks = {this.state.bookmarks} />
+      ? <AddBookmark 
+          showForm={show => this.setShowAddForm(show)} 
+          handleAdd={bookmark => this.AddBookmark(bookmark)} />
+      : <BookmarkApp 
+          bookmarks = {this.state.bookmarks}
+          showForm={show => this.setShowAddForm(show)} />
     
     return (
       <div className="App">
